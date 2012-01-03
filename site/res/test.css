@@ -1,3 +1,7 @@
+@import url("http://fonts.googleapis.com/css?family=Ubuntu");
+@import url("http://fonts.googleapis.com/css?family=Ubuntu+Mono");
+@import url("magula.css");
+
 html, body { 
 	font-family: 'Ubuntu', sans-serif; 
 }
@@ -17,7 +21,7 @@ body.test pre code {
 	font-size:17px; float:right; background:transparent; 
 	width:50%;  opacity:0.75; 
 } 
-h1, p, h3, h4, dl {
+h1, p, h4, dl {
 	margin:15px;
 }
 h2 {
@@ -25,6 +29,13 @@ h2 {
 	text-indent: 12px; color:#fff; line-height:250%; 
 	border-radius: 6px;  opacity:0.75; 
 } 
+h3 {
+  margin:3px;
+  padding:5px 12px;
+  border-radius: 6px;
+  font-weight:normal;
+  font-size: 16px;
+}
 h4 {
 	font-style: italic;
 	font-size: 16px;
@@ -61,9 +72,20 @@ a {
 .example {
 	padding: 0 1em 1em;
 	border: 1px solid #999;
-	margin: 1em 15px;
+	margin: 10px 3px;
+	border-radius: 6px;
 }
 
 dt {position: absolute;}
 
 dd {margin: 0 0 20px 120px;}
+
+h3 {
+background: -moz-linear-gradient(left, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0.75)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left, rgba(255,255,255,0.75) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left, rgba(255,255,255,0.75) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left, rgba(255,255,255,0.75) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
+background: linear-gradient(left, rgba(255,255,255,0.75) 0%,rgba(255,255,255,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
