@@ -9,7 +9,7 @@
   
     "decl is a javascript function that creates a prototype object and returns its constructor. It is similar in functionality to dojo.declare.",
                    
-  "homepage":     "https://github.com/gitbuh/decl",
+  "homepage":     "http://gitbuh.github.com/decl",
   
   "keywords":     ["prototype", "constructor"],
   
