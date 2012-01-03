@@ -1,0 +1,26 @@
+<html><head>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="res/magula.css" />
+<link rel="stylesheet" href="res/test.css" />
+<script src="res/highlight.js"></script>
+<script src="res/js.js"></script>
+<script src="../src/decl.js"></script>
+<script src="../src/detest.js"></script>
+<script src="../src/tests.js"></script>
+</head><body class="test">
+<h1>
+  decl / unit tests
+</h1>
+<iframe src="nav.html"></iframe>
+<p>
+  Click an item in the result list to view the full test.
+</p>
+<script>
+var summaryArea = document.body.appendChild(document.createElement('h2')),
+    detailArea = document.body.appendChild(document.createElement('div')),
+    testArea = document.body.appendChild(document.createElement('ol')),
+    detest = new Detest(summaryArea, detailArea, testArea);
+detest.run(declTests);
+</script>
+</body></html>

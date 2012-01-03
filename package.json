@@ -1,0 +1,20 @@
+{
+  "name":         "decl",
+  
+  "filename":     "decl.min.js",
+  
+  "version":      "0.2",
+  
+  "description":  
+  
+    "decl is a javascript function that creates a prototype object and returns its constructor. It is similar in functionality to dojo.declare.",
+                   
+  "homepage":     "https://github.com/gitbuh/decl",
+  
+  "keywords":     ["prototype", "constructor"],
+  
+  "maintainers":  [{"name": "decl"}],
+  
+  "repositories": [{"type": "git", "url": "https://github.com/gitbuh/decl"}]
+}
+
