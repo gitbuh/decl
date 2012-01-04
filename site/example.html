@@ -1,15 +1,9 @@
 <html><head>
-<link rel="stylesheet" href="res/test.css" />
+<link rel="stylesheet" href="res/site.css" />
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
-<script>
-var summaryArea = document.body.appendChild(document.createElement('h2')),
-    detailArea = document.body.appendChild(document.createElement('div')),
-    testArea = document.body.appendChild(document.createElement('ol')),
-    detest = new Detest(summaryArea, detailArea, testArea);
-detest.run(declTests);
-</script>
-</head><body>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body><div class="inner">
 <h1>
   decl / examples
 </h1>
@@ -18,4 +12,4 @@ detest.run(declTests);
   Blah.
 </p>
 
-</body></html>
+</div></body></html>

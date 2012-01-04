@@ -1,14 +1,14 @@
 <html><head>
-<link rel="stylesheet" href="res/test.css" />
+<link rel="stylesheet" href="res/site.css" />
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-</head><body>
+</head><body><div class="inner">
 <h1>
   decl
 </h1>
 <iframe src="nav.html"></iframe>
-<h3>What does it do?</h3>
+<h3>What is <code>decl</code>?</h3>
 <p>
   <code>decl</code> is a javascript function that creates a prototype object and returns its constructor.
 </p>
@@ -62,7 +62,9 @@ These code blocks look very similar. So why use <code>decl</code>?
 <h4>decl is simple</h4>
 
 <p>
-The most noticeable difference is that <code>decl</code>'s syntax is easier to remember; it only takes one parameter and returns the result, instead of assigning the result to
+The most noticeable difference is that <code>decl</code>'s 
+syntax is easier to remember; it only takes one parameter and 
+returns the result, instead of assigning the result to
 a variable identified by a string in the first parameter.
 </p>
 
@@ -88,10 +90,8 @@ any properties other than the ones you define. By contrast,
 <code>dojo.declare</code> creates properties in
 the constructor (<code>_meta</code> and <code>extend</code>)
 <i>and</i> the prototype (<code>__inherited</code>,
-<code>declaredClass</code>,
-<code>getInherited</code>,
-<code>inherited</code>,
-<code>isInstanceOf</code>, and
+<code>declaredClass</code>, <code>getInherited</code>,
+<code>inherited</code>, <code>isInstanceOf</code>, and
 <code>superclass</code>).
 </p>
 
@@ -108,13 +108,15 @@ here</a>. These "convenience methods" are documented:
 <dd>"This is a companion method to inherited(). 
 The difference is that it doesn't execute the found method, but returns it."</dd>
 <dt>isInstanceOf</dt> 
-<dd>"This method checks if an instance is derived from a given class. It is modeled on instanceof operator."</dd>
+<dd>"This method checks if an instance is derived from a given class. 
+It is modeled on instanceof operator."</dd>
 </dl>
 
 <p>
 Regarding <code>inherited</code>/<code>getInherited</code>: 
-With <code>decl</code>, calling <code>this.extend</code> within a declaration function
-returns a reference to the parent constructor's prototype. Invoke its function properties with <code>apply</code>.
+With <code>decl</code>, calling <code>this.extend</code> 
+within a declaration function returns a reference to the parent 
+constructor's prototype. Invoke its function properties with <code>apply</code>.
 </p>
 <p>
 Regarding <code>isInstanceOf</code>: 
@@ -123,4 +125,4 @@ the <code>instanceof</code> operator in the usual way, so this is
 not necessary.
 </p>
 
-</body></html>
+</div></body></html>

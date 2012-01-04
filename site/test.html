@@ -1,11 +1,11 @@
 <html><head>
-<link rel="stylesheet" href="res/test.css" />
+<link rel="stylesheet" href="res/site.css" />
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
 <script src="../src/decl.js"></script>
 <script src="../src/detest.js"></script>
 <script src="../src/tests.js"></script>
-</head><body class="test">
+</head><body class="test"><div class="inner">
 <h1>
   decl / unit tests
 </h1>
@@ -15,11 +15,15 @@
   <a href="https://github.com/gitbuh/decl/blob/gh-pages/src/tests.js">source</a> 
   for all unit tests. 
 </p>
+<div id="testarea"></div>
+<div style="clear:both"></div>
 <script>
-var summaryArea = document.body.appendChild(document.createElement('h2')),
-    detailArea = document.body.appendChild(document.createElement('div')),
-    testArea = document.body.appendChild(document.createElement('ol')),
+var t = document.getElementById('testarea'),
+    summaryArea = t.appendChild(document.createElement('h2')),
+    detailArea = t.appendChild(document.createElement('div')),
+    testArea = t.appendChild(document.createElement('ol')),
     detest = new Detest(summaryArea, detailArea, testArea);
+
 detest.run(declTests);
 </script>
-</body></html>
+</div></body></html>
