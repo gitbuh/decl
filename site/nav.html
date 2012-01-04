@@ -1,6 +1,8 @@
 <html><head>
 <title>decl / nav</title>
 <link rel="stylesheet" href="res/site.css" />
+<script src="res/swfobject.js"></script>
+<script src="res/bhd.js"></script>
 </head><body class="nav">
 <a href="#" onclick="top.location='index.html'; return false;">
 home</a>
@@ -10,4 +12,25 @@ examples</a>
 dojo users</a>
 <a href="#" onclick="top.location='test.html'; return false;">
 unit tests</a>
+<div id="dl_button" style="float:right;display:block;"></div>
+
+<script>
+
+//(function(){
+
+var testBtn = new BHD.Button({
+  // id of the element to replace with this button (required)
+  id:'dl_button',
+  // button image
+  sprite:'res/buttons.png'
+},function(){
+  // set default filename to the value of the text input
+  testBtn.setFile(document.getElementById('filename').value);
+  // set file contents to the value of the textarea
+  testBtn.setData(document.getElementById('filedata').value);
+});
+
+//}());
+
+</script>
 </body></html>

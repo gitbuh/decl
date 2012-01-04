@@ -3,17 +3,12 @@
 <link rel="stylesheet" href="res/site.css" />
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
-<script src="res/swfobject.js"></script>
-<script src="res/bhd.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </head><body><div class="inner">
 <h1>
   decl / home
 </h1>
 <iframe src="nav.html"></iframe>
-
-
-<div id="dl_button"></div>
 
 <h3>What is <code>decl</code>?</h3>
 <p>
@@ -115,24 +110,4 @@ the constructor (<code>_meta</code> and <code>extend</code>)
 Dojo users interested in decl can find more information 
 <a href="dojo.html">here</a>.
 </p>
-
-<script>
-
-//(function(){
-
-var testBtn = new BHD.Button({
-  // id of the element to replace with this button (required)
-  id:'dl_button',
-  // button image
-  sprite:'res/buttons.png'
-},function(){
-  // set default filename to the value of the text input
-  testBtn.setFile(document.getElementById('filename').value);
-  // set file contents to the value of the textarea
-  testBtn.setData(document.getElementById('filedata').value);
-});
-
-//}());
-
-</script>
 </div></body></html>
