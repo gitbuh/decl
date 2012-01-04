@@ -108,6 +108,10 @@ dt {position: absolute;}
 
 dd {margin: 0 0 20px 120px;}
 
+#dl_button {
+  float:right;
+}
+
 h3 {
 background: -moz-linear-gradient(left, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0.75)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
@@ -117,3 +121,4 @@ background: -ms-linear-gradient(left, rgba(255,255,255,0.75) 0%,rgba(255,255,255
 background: linear-gradient(left, rgba(255,255,255,0.75) 0%,rgba(255,255,255,0) 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
 }
+
