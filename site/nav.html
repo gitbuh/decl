@@ -18,16 +18,11 @@ unit tests</a>
 
 //(function(){
 
-var testBtn = new BHD.Button({
-  // id of the element to replace with this button (required)
+var downloadBtn = new BHD.Button({
   id:'dl_button',
-  // button image
   sprite:'res/buttons.png'
 },function(){
-  // set default filename to the value of the text input
-  testBtn.setFile(document.getElementById('filename').value);
-  // set file contents to the value of the textarea
-  testBtn.setData(document.getElementById('filedata').value);
+  downloadBtn.setUrl("../../dist/decl.min.js");
 });
 
 //}());
