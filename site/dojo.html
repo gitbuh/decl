@@ -1,0 +1,51 @@
+<html><head>
+<title>decl / dojo users</title>
+<link rel="stylesheet" href="res/site.css" />
+<script src="res/highlight.js"></script>
+<script src="res/js.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body><div class="inner">
+<h1>
+  decl / dojo users 
+</h1>
+<iframe src="nav.html"></iframe>
+<h3>Disclaimer</h3>
+<p>
+  I don't actually use Dojo, so if I get any of this wrong please correct me.
+</p>
+
+<h3><code>decl</code> for Dojo users</h3>
+
+
+<p>
+These seem to be a mix of internal stuff for Dojo and "convenience methods," explained 
+<a href="http://dojotoolkit.org/reference-guide/dojo/declare.html#class-methods">
+here</a>. These "convenience methods" are documented:
+</p>
+
+<dl>
+<dt>inherited</dt> 
+<dd>"The method is used to call a superclass method."</dd>
+<dt>getInherited</dt> 
+<dd>"This is a companion method to inherited(). 
+The difference is that it doesn't execute the found method, but returns it."</dd>
+<dt>isInstanceOf</dt> 
+<dd>"This method checks if an instance is derived from a given class. 
+It is modeled on instanceof operator."</dd>
+</dl>
+
+<p>
+Regarding <code>inherited</code>/<code>getInherited</code>: 
+With <code>decl</code>, calling <code>this.extend</code> 
+within a declaration function returns a reference to the parent 
+constructor's prototype. Invoke its function properties with <code>apply</code>.
+</p>
+<p>
+Regarding <code>isInstanceOf</code>: 
+Objects created by constructors produced by <code>decl</code> work with
+the <code>instanceof</code> operator in the usual way, so this is
+not necessary.
+</p>
+
+</div></body></html>
+
