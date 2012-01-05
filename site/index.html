@@ -1,18 +1,71 @@
 <html><head>
 <title>decl / home</title>
 <link rel="stylesheet" href="res/site.css" />
+<script src="res/bhd.js"></script>
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </head><body><div class="inner">
+<div id="dl_button" style="float:left;display:block;"></div>
 <h1>
   decl / home
 </h1>
 <iframe src="nav.html"></iframe>
 
+
 <h3>What is <code>decl</code>?</h3>
 <p>
   <code>decl</code> is a javascript function that creates a prototype object and returns its constructor.
+</p>
+<p>
+  The prototype declaration argument can either be an object literal, 
+  or a function that constructs an object when invoked with <code>new</code>.
+</p>
+
+<pre style="float:left; width:49%; "><code class="example">
+// object literal
+
+var Point = decl({
+  x: 0,
+  y: 0,
+  moveBy: function(x, y){
+    this.x += x;
+    this.y += y;
+  }
+});
+</code></pre>
+
+<pre style="float:right; width:49%; "><code class="example">
+// "metaconstructor"
+
+var Point = decl(function(){
+  this.x = 0;
+  this.y = 0;
+  this.moveBy = function(x, y){
+    this.x += x;
+    this.y += y;
+  };
+});
+</code></pre>
+
+<h4>Object literal or metaconstructor?</h4>
+
+<p>
+The object literal style is more terse, but
+the "metacostructor" style is more forgiving
+(parentheses vs commas, ASI) and offers
+some additional sugar to do things that are 
+somewhat awkward in object literal mode.
+</p>
+    
+<p>
+The "metaconstructor" style also provides a closure for
+internal functions, variables, references to <code>this</code>,
+etc.
+</p>
+
+<p>
+  You can find more examples on the <a href="example.html">examples</a> and <a href="test.html">unit tests</a> pages.
 </p>
 
 <h3>What else is like <code>decl</code>?</h3>
@@ -110,4 +163,19 @@ the constructor (<code>_meta</code> and <code>extend</code>)
 Dojo users interested in decl can find more information 
 <a href="dojo.html">here</a>.
 </p>
+
+<script>
+
+(function(){
+
+var downloadBtn = new BHD.Button({
+  id:'dl_button',
+  sprite:'res/buttons.png'
+},function(){
+  downloadBtn.setUrl("../../dist/decl.min.js");
+});
+
+}());
+
+</script>
 </div></body></html>

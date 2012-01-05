@@ -24,6 +24,7 @@ body {
   background-image: url(fade.png);
   background-repeat:repeat-x;
 	border-radius: 0px 0px 6px 6px;
+	position:relative;
 }
 pre { 
 	margin:0; padding:0; 
@@ -64,15 +65,14 @@ h4 {
 	font-style: italic;
 	font-size: 16px;
 	font-weight: normal;
-	font-family: 'Ubuntu Mono', monospace;  
 }
 body.test ol {
 	float:left;
 }
-li {padding: 2px 10px; border-radius: 1em;
+body.test li {padding: 2px 10px; border-radius: 1em;
 	letter-spacing:-1px; 
 }
-li:hover { 
+body.test li:hover { 
 	color:#000; background: #fff; 
 	box-shadow: 0px 1px 6px rgba(0,0,0,0.33); 
 }
@@ -96,9 +96,10 @@ a {
 }
 .example {
 	padding: 0 12px 10px;
-	border: 1px solid #ccc;
 	margin: 10px 3px;
 	border-radius: 6px;
+	box-shadow: 0px 0px 8px #fff inset; 
+	border: 1px solid white;
 }
 .example * {
   margin:0; padding:0;
@@ -109,7 +110,7 @@ dt {position: absolute;}
 dd {margin: 0 0 20px 120px;}
 
 #dl_button {
-  float:right;
+margin-top:5px; position:absolute; right:10px;
 }
 
 h3 {

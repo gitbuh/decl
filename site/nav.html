@@ -2,7 +2,6 @@
 <title>decl / nav</title>
 <link rel="stylesheet" href="res/site.css" />
 <script src="res/swfobject.js"></script>
-<script src="res/bhd.js"></script>
 </head><body class="nav">
 <a href="#" onclick="top.location='index.html'; return false;">
 home</a>
@@ -12,20 +11,4 @@ examples</a>
 dojo users</a>
 <a href="#" onclick="top.location='test.html'; return false;">
 unit tests</a>
-<div id="dl_button" style="float:right;display:block;"></div>
-
-<script>
-
-//(function(){
-
-var downloadBtn = new BHD.Button({
-  id:'dl_button',
-  sprite:'res/buttons.png'
-},function(){
-  downloadBtn.setUrl("../../dist/decl.min.js");
-});
-
-//}());
-
-</script>
 </body></html>
