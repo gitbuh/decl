@@ -1,3 +1,4 @@
+<!doctype html>
 <html><head>
 <title>decl / home</title>
 <link rel="stylesheet" href="res/site.css" />
@@ -111,8 +112,9 @@ var Person = decl({
 These code blocks look very similar. So why use <code>decl</code>?
 </p>
 
-<div class="col3">
+<div class="col3-outer">
 
+<div class="col3 col3-a">
 <h3><code>decl</code> is simple</h3>
 <p>
 The most noticeable difference is that <code>decl</code>'s 
@@ -124,12 +126,9 @@ a variable identified by a string in the first parameter.
 One of <code>decl</code>'s main goals is to provide a syntax which is 
 both easy to learn and easy to remember. 
 </p>
-
 </div>
-<div class="col3">
-
+<div class="col3 col3-b">
 <h3><code>decl</code> is fast</h3>
-
 <p> Constructors returned by <code>decl</code> are able to
 instantiate new objects
 <a href="http://jsperf.com/dojo-declare-vs-decl">much faster</a>
@@ -139,22 +138,21 @@ They perform as well as if they had been declared in plain old javascript.
 The constructors created by Dojo are only able to create new
 objects at about 12% of the speed of their <code>decl</code> counterparts.
 </p>
-
 </div>
-<div class="col3">
-
+<div class="col3 col3-c">
 <h3><code>decl</code> doesn't pollute</h3>
-
 <p>
 The constructors and prototypes created by <code>decl</code> <i>don't have
 any properties other than the ones you define.</i> 
-By contrast, <code>dojo.declare</code> creates properties in
+</p><p>By contrast, <code>dojo.declare</code> creates properties in
 the constructor (<code>_meta</code> and <code>extend</code>)
 <i>and</i> the prototype (<code>__inherited</code>,
 <code>declaredClass</code>, <code>getInherited</code>,
 <code>inherited</code>, <code>isInstanceOf</code>, and
 <code>superclass</code>).
 </p>
+
+</div>
 
 </div>
 <div style="clear:both;"></div>
