@@ -9,8 +9,303 @@
   decl / examples
 </h1>
 <iframe src="nav.html"></iframe>
+
+<h4>Example example</h4>
+
 <p>
-  Blah.
+  In each example, the object literal style is shown on the left,
+  and the metaconstructor style is shown on the right.
+</p>
+
+<pre class="left"><code class="example">
+// object literal
+
+var ExampleThing = decl({ 
+  //...
+});
+</code></pre>
+
+<pre class="right"><code class="example">
+// "metaconstructor"
+
+var ExampleThing = decl(function(){ 
+  //...
+});
+</code></pre>
+
+
+
+
+
+<h4>Implicit constructor</h4>
+
+<p>
+  There's no need to provide a <code>constructor</code> function
+  in your declaration; it will automatically be created if omitted.
+</p>
+
+<pre class="left"><code class="example">
+var Thing = decl({ 
+  
+  title: "thing",
+  
+  describe: function(){
+    alert("Looks like a " + this.title + ".");
+  }
+  
+});
+</code></pre>
+
+<pre class="right"><code class="example">
+var Thing = decl(function(){ 
+  
+  this.title = "thing";
+  
+  this.describe = function(){
+    alert("Looks like a " + this.title + ".");
+  };
+  
+});
+</code></pre>
+
+<pre style="clear:both"><code class="example">
+var item = new Thing();
+
+item.describe(); // "Looks like a thing."
+
+item.title = "glass sculpture";
+
+item.describe(); // "Looks like a glass sculpture."
+</code></pre>
+
+
+
+
+
+
+
+<h4>Explicit constructor</h4>
+
+<p>
+  You may provide an explicit <code>constructor</code> function
+  in your declaration; it will be returned by <code>decl</code>.
+</p>
+
+<pre class="left"><code class="example">
+var Animal = decl({ 
+  
+  species: "unknown critter",
+  
+  constructor: function(species) {
+    if (species) {
+      this.species = species;
+    }
+  },
+  
+  describe: function(){
+    alert("Looks like a " + this.species);
+  }
+  
+});
+</code></pre>
+
+<pre class="right"><code class="example">
+var Animal = decl(function(){ 
+  
+  this.species = "unknown critter";
+  
+  this.constructor = function(species) {
+    if (species) {
+      this.species = species;
+    }
+  };
+  
+  this.describe = function(){
+    alert("Looks like a " + this.species);
+  };
+  
+});
+</code></pre>
+
+<pre style="clear:both"><code class="example">
+var donald = new Animal("duck");
+
+donald.describe(); // "Looks like a duck"
+</code></pre>
+
+<div style="clear:both"></div>
+
+
+
+
+
+
+
+
+
+<h4>Inheritance</h4>
+
+<p>
+  <code>decl</code> makes prototypal inheritance easy.
+  The metaconstructor style (right) offers a clean syntax for inheritance. 
+</p>
+
+<pre class="left"><code class="example">
+var Dog = decl({ 
+  
+  "decl-data": {parent: Animal},
+  
+  species: "dog"
+  
+});
+</code></pre>
+
+<pre class="right"><code class="example">
+var Dog = decl(function(){ 
+  
+  this.extend(Animal);
+  
+  this.species = "dog";
+  
+});
+</code></pre>
+
+<pre style="clear:both"><code class="example">
+var rex = new Dog();
+
+rex.describe(); // "Looks like a dog"
+</code></pre>
+
+
+
+
+
+
+
+<h4>Implicit constructor + inheritance</h4>
+
+<p>
+  In the previous example, no <code>constructor</code> was provided
+  in the declaration, so <code>decl</code> created a wrapper for
+  the parent constructor. Arguments may be passed to the child constructor
+  just as they are passed to the parent constructor.
+</p>
+
+<pre style="clear:both"><code class="example">
+var fido = new Dog("hound");
+
+fido.describe(); // "Looks like a hound"
+</code></pre>
+
+
+
+
+<h4>Explicit constructor + inheritance</h4>
+
+<p>
+  If you provide a <code>constructor</code> in the declaration, 
+  you may want to <code>apply</code> the parent constructor.
+</p>
+
+<p>
+  Calling <code>this.extend</code> within a metaconstructor 
+  returns a reference to the parent constructor's prototype.
+</p>
+
+<pre class="left"><code class="example">
+var Toad = decl({ 
+  
+  "decl-data": {parent: Animal},
+  
+  species: "toad",
+  
+  constructor: function(species, habitat) {
+    
+    // apply the parent constructor
+    Animal.prototype.apply(this, arguments);
+    
+    if (habitat) {
+      this.habitat = habitat;
+    }
+  }
+  
+});
+</code></pre>
+
+<pre class="right"><code class="example">
+var Toad = decl(function(){ 
+
+  var parent = this.extend(Animal);  
+  
+  this.species = "toad";
+  
+  this.constructor = function(species, habitat) {
+  
+    // apply the parent constructor
+    parent.apply(this, arguments);
+    
+    if (habitat) {
+      this.habitat = habitat;
+    }
+  };
+  
+});
+</code></pre>
+
+
+
+
+
+
+<h4>Metadata</h4>
+
+<p>
+  By default, <code>decl</code> stores information in a property
+  of the declaration object named <code>decl-data</code>.
+  The metaconstructor style abstracts this; there is no reason
+  to worry about <code>decl-data</code> when using the metaconstructor style.   
+</p>
+  
+<p>
+  When using the object literal style, metadata must be stored in the <code>decl-data</code>
+  property. The property name may be changed from <code>decl-data</code> to
+  something else by setting <code>decl.dataKey</code> to a different value.
+  This may be desirable if the object literal style is preferred.
+</p>
+
+<p>
+  Note that the <code>decl-data</code> property will never be copied
+  from the declaration object into the prototype of the constructor,
+  whether or not the property is renamed.
+</p>
+
+<pre style="clear:both"><code class="example">
+
+// "decl-data" is annoying to type, but shouldn't conflict with anything.
+
+var Frog = decl(function(){ 
+  "decl-data": {parent: Animal},
+  species: "frog"
+});
+
+// Change decl's data storage property name.
+
+decl.dataKey = "meta";
+
+// This is easier to type. Your constructor prototypes can't have a property named "meta" now though.
+
+var Gopher = decl(function(){ 
+  meta: {parent: Animal},
+  species: "gopher"
+});
+
+// Change storage property name back to default.
+decl.dataKey = "decl-data";
+
+</code></pre>
+
+<p>
+Take a look at the <a href="test.html">unit tests</a> for more examples.
 </p>
 
 </div></body></html>

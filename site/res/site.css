@@ -95,7 +95,7 @@ a {
 }
 .example {
 	padding: 0 12px 10px;
-	margin: 0px 3px 20px;
+	margin: 0px 3px 15px;
 	background: #eee;
   outline:1px solid white;
 }
@@ -105,7 +105,7 @@ a {
 
 dt {position: absolute;}
 
-dd {margin: 0 0 20px 120px;}
+dd {margin: 0 0 15px 120px;}
 
 #dl_button {
 margin-top:5px; position:absolute; right:10px;
@@ -142,4 +142,5 @@ margin-top:5px; position:absolute; right:10px;
   box-shadow:none;
 }
 
+.left { float:left; width:49%;  } .right {float:right; width:49%; } 
 
