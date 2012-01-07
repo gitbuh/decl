@@ -12,15 +12,14 @@ pre, pre *, code, dt{
 }
 
 body {
-	font-size:13px; color: #333; background: #aaa;
-  background-image: url(bg.png);
+	font-size:13px; color: #333; background-color: white;
+	background-image: url(bg/fade.png), url(bg/50.png), url(bg/30.png), url(bg/20.png), url(bg/10.png);
 	background-attachment:fixed;
-	background-position: 50% 50%;
 }
 .inner {
   padding: 15px; background:#ddd url(fade.png) repeat-x; max-width:800px; 
 	line-height: 1.5em; border: 4px solid white; margin:0px auto 60px;
-	box-shadow:0px 2px 4px 4px rgba(0,0,0,0.15); 
+	outline: 1px solid #ccc;
 	position:relative;
 }
 pre { 
