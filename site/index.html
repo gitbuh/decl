@@ -2,6 +2,7 @@
 <html><head>
 <title>decl / home</title>
 <link rel="stylesheet" href="res/site.css" />
+<script src="res/swfobject.js"></script>
 <script src="res/bhd.js"></script>
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
@@ -18,9 +19,19 @@
 <p>
   <code>decl</code> is a javascript function that creates a prototype object and returns its constructor.
 </p>
+
+
+<h3>How is <code>decl</code> used?</h3>
 <p>
-  The prototype declaration argument can either be an object literal, 
-  or a function that constructs an object when invoked with <code>new</code>.
+  <code>decl</code> takes a single argument named "declaration."
+</p>
+<p>
+  The declaration argument can either be an object literal, 
+  or a function that constructs an equivalent object when invoked with <code>new</code>.
+</p>
+<p>
+  Any properties created in the declaration will be copied
+  to the prototype of the constructor function before it is returned. 
 </p>
 
 <pre style="float:left; width:49%; "><code class="example">
@@ -53,10 +64,9 @@ var Point = decl(function(){
 
 <p>
 The object literal style is more terse, but
-the "metacostructor" style is more forgiving
+the "metaconstructor" style is more forgiving
 (parentheses vs commas, ASI) and offers
-some additional sugar to do things that are 
-somewhat awkward in object literal mode.
+some additional sugar for inheritance.
 </p>
     
 <p>
@@ -109,7 +119,7 @@ var Person = decl({
 </code></pre>
 
 <p> 
-These code blocks look very similar. So why use <code>decl</code>?
+These code blocks look very similar. What's different about <code>decl</code>?
 </p>
 
 <div class="col3-outer">

@@ -10,7 +10,9 @@
 </h1>
 <iframe src="nav.html"></iframe>
 
-<h4>Example example</h4>
+<!-- example -->
+
+<h3>Example example</h3>
 
 <p>
   In each example, the object literal style is shown on the left,
@@ -33,11 +35,9 @@ var ExampleThing = decl(function(){
 });
 </code></pre>
 
+<!-- example -->
 
-
-
-
-<h4>Implicit constructor</h4>
+<h3>Implicit constructor</h3>
 
 <p>
   There's no need to provide a <code>constructor</code> function
@@ -78,13 +78,9 @@ item.title = "glass sculpture";
 item.describe(); // "Looks like a glass sculpture."
 </code></pre>
 
+<!-- example -->
 
-
-
-
-
-
-<h4>Explicit constructor</h4>
+<h3>Explicit constructor</h3>
 
 <p>
   You may provide an explicit <code>constructor</code> function
@@ -133,17 +129,9 @@ var donald = new Animal("duck");
 donald.describe(); // "Looks like a duck"
 </code></pre>
 
-<div style="clear:both"></div>
+<!-- example -->
 
-
-
-
-
-
-
-
-
-<h4>Inheritance</h4>
+<h3>Inheritance</h3>
 
 <p>
   <code>decl</code> makes prototypal inheritance easy.
@@ -176,13 +164,9 @@ var rex = new Dog();
 rex.describe(); // "Looks like a dog"
 </code></pre>
 
+<!-- example -->
 
-
-
-
-
-
-<h4>Implicit constructor + inheritance</h4>
+<h3>Implicit constructor + inheritance</h3>
 
 <p>
   In the previous example, no <code>constructor</code> was provided
@@ -197,10 +181,9 @@ var fido = new Dog("hound");
 fido.describe(); // "Looks like a hound"
 </code></pre>
 
+<!-- example -->
 
-
-
-<h4>Explicit constructor + inheritance</h4>
+<h3>Explicit constructor + inheritance</h3>
 
 <p>
   If you provide a <code>constructor</code> in the declaration, 
@@ -253,11 +236,52 @@ var Toad = decl(function(){
 </code></pre>
 
 
+<!-- example -->
 
+<h3>Partial declaration</h3>
 
+<p>
+  Declarations can be amended like this:
+</p>
 
+<pre class="left"><code class="example">
+// more properties for Animal.prototype
+decl({ 
+  
+  "decl-data": {partial: Animal},
+  
+  sound: "makes no sound",
+  
+  makeNoise: function() {
+    alert("The " + this.species + " " + this.sound);
+  }
+  
+});
+</code></pre>
 
-<h4>Metadata</h4>
+<pre class="right"><code class="example">
+// more properties for Animal.prototype
+decl(function(){ 
+  
+  this.augment(Animal);
+  
+  this.sound = "makes no sound";
+  
+  this.makeNoise = function() {
+    alert("The " + this.species + " " + this.sound);
+  };
+  
+});
+</code></pre>
+
+<pre style="clear:both"><code class="example">
+var critter = new Animal();
+critter.sound = "growls";
+
+critter.makeNoise(); // "The unknown critter growls"
+</code></pre>
+
+<h3>Metadata</h3>
 
 <p>
   By default, <code>decl</code> stores information in a property
