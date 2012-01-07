@@ -222,7 +222,7 @@ var Toad = decl({
   constructor: function(species, habitat) {
     
     // apply the parent constructor
-    Animal.prototype.apply(this, arguments);
+    Animal.apply(this, arguments);
     
     if (habitat) {
       this.habitat = habitat;
@@ -242,7 +242,7 @@ var Toad = decl(function(){
   this.constructor = function(species, habitat) {
   
     // apply the parent constructor
-    parent.apply(this, arguments);
+    parent.constructor.apply(this, arguments);
     
     if (habitat) {
       this.habitat = habitat;
