@@ -31,7 +31,7 @@ decl.proto = {
 
   augment: function (ctor) { 
     return (this[decl.dataKey].partial=ctor).prototype; 
-  }
+  },
 
 };
 
