@@ -2,4 +2,4 @@ all: decl
 
 decl:
 	@echo Compressing decl...
-	@yui-compressor src/decl.js > dist/decl.min.js
+	@java -jar ~/Projects/closure-compiler/compiler.jar src/decl.js  > dist/decl.min.js

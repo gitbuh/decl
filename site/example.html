@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html><head>
 <title>decl / examples</title>
+<link rel="icon" type="image/png" href="res/favicon.png">
 <link rel="stylesheet" href="res/site.css" />
 <script src="res/highlight.js"></script>
 <script src="res/js.js"></script>
@@ -142,7 +143,7 @@ donald.describe(); // "Looks like a duck"
 <pre class="left"><code class="example">
 var Dog = decl({ 
   
-  "decl-data": {parent: Animal},
+  "decl-data": {extend: Animal},
   
   species: "dog"
   
@@ -199,7 +200,7 @@ fido.describe(); // "Looks like a hound"
 <pre class="left"><code class="example">
 var Toad = decl({ 
   
-  "decl-data": {parent: Animal},
+  "decl-data": {extend: Animal},
   
   species: "toad",
   
@@ -249,7 +250,7 @@ var Toad = decl(function(){
 // more properties for Animal.prototype
 decl({ 
   
-  "decl-data": {partial: Animal},
+  "decl-data": {augment: Animal},
   
   sound: "makes no sound",
   
@@ -282,6 +283,8 @@ critter.sound = "growls";
 critter.makeNoise(); // "The unknown critter growls"
 </code></pre>
 
+<!-- example -->
+
 <h3>Metadata</h3>
 
 <p>
@@ -309,7 +312,7 @@ critter.makeNoise(); // "The unknown critter growls"
 // "decl-data" is annoying to type, but shouldn't conflict with anything.
 
 var Frog = decl(function(){ 
-  "decl-data": {parent: Animal},
+  "decl-data": {extend: Animal},
   species: "frog"
 });
 
@@ -320,7 +323,7 @@ decl.dataKey = "meta";
 // This is easier to type. Your constructor prototypes can't have a property named "meta" now though.
 
 var Gopher = decl(function(){ 
-  meta: {parent: Animal},
+  meta: {extend: Animal},
   species: "gopher"
 });
 

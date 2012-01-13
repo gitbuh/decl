@@ -1,3 +1,56 @@
+
+var decl = (function(){
+
+var Clone = new Function(), // dummy function for prototypal cloning
+    _p = 'prototype', // shortcuts to help get smaller minified size
+    _c = 'constructor', 
+    /** dataKey
+
+        The name of the property where declaration objects' 
+        metadata will be stored. If you want to pass objects to decl 
+        instead of functions, put the metadata (parent, partial, etc.) 
+        in this property.
+    */
+    dataKey = 'decl-data',
+    
+    /** proto
+
+        This object is used as a prototype for declaration objects,
+        so all properties are available as properties of `this`
+        inside the body of each declaration function.
+
+    */
+    proto = {
+
+      /** extend
+
+          Perform prototypal inheritance by calling `this.extend(ParentCtor)`
+          within your decalration function.
+
+          @param {Function} ctor to extend.
+
+          @return {Object} prototype of parent ctor.
+      */
+      extend: function (ctor) { 
+        return (this[dataKey].extend=ctor)[_p]; 
+      },
+
+      /** augment
+
+          Finish a partial declaration.
+          TODO: test for bugs, possibly retroactively fix child classes when augmenting parent.
+
+          @param {Function} ctor to augment.
+
+          @return {Object} prototype of partial ctor.
+      */
+      augment: function (ctor) { 
+        return (this[dataKey].augment=ctor)[_p]; 
+      }
+
+    };
+
+
 /** decl
 
     Create a prototype object and return its constructor.
@@ -9,35 +62,22 @@ function decl (declaration) {
     declaration = {};
   }
   else if (declaration.call) {
-    declaration.prototype=decl.proto;
-    declaration.prototype[decl.dataKey]={};
+    declaration[_p]=proto;
+    declaration[_p][dataKey]={};
   }
-  return decl.getCtor(declaration);
+  return getCtor(declaration);
 }
 
-// Name of property where declaration objects' metadata will be stored.
-// If you want to pass objects to decl instead of functions,
-// put the metadata (parent, partial, etc.) in this property.
-decl.dataKey = 'decl-data';
+/** setDataKey
 
-/** proto
-
-    This object is used as a prototype for declaration objects,
-    so all properties are available as properties of `this`
-    inside the body of each declaration function.
-
+    Sets the name of the property where declaration objects' 
+    metadata will be stored. If you want to pass objects to decl 
+    instead of functions, put the metadata (parent, partial, etc.) 
+    in this property.
+    
+    @param {String} String value to use for dataKey
 */
-decl.proto = {
-
-  extend: function (ctor) { 
-    return (this[decl.dataKey].parent=ctor).prototype; 
-  },
-
-  augment: function (ctor) { 
-    return (this[decl.dataKey].partial=ctor).prototype; 
-  }
-
-};
+decl.setDataKey = function (value) { dataKey=value; };
 
 /** clone
 
@@ -45,79 +85,92 @@ decl.proto = {
     
     @param {Object} obj
     
-    @return {Object} clone of obj
+    @return {Object} clone of obj.
 
 */
-decl.clone = function (object) { 
-  var r = this instanceof decl.clone ? this : 
-          new decl.clone(decl.clone.prototype=object);
-  // reset prototype so we don't get false positives on
-  // `this instanceof decl.clone` condition
-  decl.clone.prototype={};
+function clone (object) {
+  var r=new Clone(Clone[_p]=object);
+  Clone[_p]={};
   return r;
 };
-
-// Merge src object's properties into target object
 
 /** merge
 
     Merge src object's properties into target object.
     
-    @param {Object} target object to merge properties into
+    @param {Object} target object to merge properties into.
     
-    @param {Object} src object to merge properties from
+    @param {Object} src object to merge properties from.
     
-    @return {Object} target for chaining
+    @return {Object} target for chaining.
 
 */
-decl.merge = function (target, src) { 
+function merge (target, src) { 
   for (var k in src) {
-    if (src.hasOwnProperty(k) && k!='prototype' && k!=decl.dataKey) {  
+    if (src.hasOwnProperty(k) && k!=_p && k!=dataKey) {  
       target[k] = src[k];
     }
   }
   return target;
 };
 
-// Generate empty constructor
-decl.empty = function () { 
-  return function(){}; 
-};
+/** getCtor
 
-// Generate wrapper for parent constructor
-decl.wrap = function (parent) {
-  return function(){ parent.apply(this, arguments); };
-};
+    Prepare a constructor to be returned by decl.
+    
+    @param {Function|Object} declaration
+    
+    @return {Function} constructor.
 
-// Prepare a constructor to be returned by decl
-decl.getCtor = function (declaration) {    
-  var oldProto, p = 'prototype', c = 'constructor',
+*/
+function getCtor (declaration) {    
+  var oldProto,
       declFn = declaration.call ? declaration : null,
       declObj = declFn ? new declFn(declFn) : declaration, 
-      data = declObj[decl.dataKey] || {},
-      parent = data.parent, partial = data.partial, 
-      ctor = 
-          declObj.hasOwnProperty(c) ? declObj[c] : // ctor is user-defined 
-          partial ? partial : // ctor is already defined (partial)  
-          parent ? decl.wrap(parent) : // ctor is generated wrapper for parent ctor
-          decl.empty(); // ctor is generated empty function
+      data = declObj[dataKey] || {},
+      parent = data.extend, partial = data.augment, 
+      ctor =  // user-defined ctor 
+              declObj.hasOwnProperty(_c) ? declObj[_c] : 
+              // ctor already defined (partial)  
+              partial ? partial : 
+              // generated wrapper for parent ctor
+              parent ? decl.wrap(parent) : 
+              // generated empty function
+              new Function(); 
   
   // If there's a parent constructor, use a clone of its prototype
   // and copy the properties from the current prototype.
   if (parent) {
-    oldProto = ctor[p];
-    ctor[p] = decl.clone(parent[p]);
-    decl.merge(ctor[p], oldProto);
+    oldProto = ctor[_p];
+    ctor[_p] = clone(parent[_p]);
+    merge(ctor[_p], oldProto);
   }
   
   // Merge the declaration function's properties into the constructor.
   // This allows adding properties to `this.constructor` in the declaration function
   // without defining a constructor, or before defining one.
-  decl.merge(ctor, declFn);
+  merge(ctor, declFn);
   
   // Merge the declaration objects's properties into the prototype.
-  decl.merge(ctor[p], declObj);
+  merge(ctor[_p], declObj);
   
   // Have the constructor reference itself in its prototype, and return it.
-  return (ctor[p][c]=ctor);
+  return (ctor[_p][_c]=ctor);
+};
+
+return decl;
+
+}());
+
+/** wrap
+
+    Generate wrapper for parent constructor.
+    
+    @param {Function} parent constructor to wrap.
+    
+    @return {Function} child constructor.
+
+*/
+decl.wrap = function (parent) {
+  return function(){ parent.apply(this, arguments); };
 };

@@ -210,7 +210,7 @@ function () {
   this.title = 'obj lit implicit ctor -> implicit ctor';
   
   My.ObjImpThingObjImpKid = decl({
-    'decl-data': {parent: My.ObjImpThing},
+    'decl-data': {extend: My.ObjImpThing},
     foo: 'bar'
   });
   
@@ -228,7 +228,7 @@ function () {
   this.title = 'obj lit explicit ctor -> implicit ctor';
 
   My.ObjImpThingObjExpKid = decl({
-    'decl-data': {parent: My.ObjImpThing},
+    'decl-data': {extend: My.ObjImpThing},
     constructor: function () { 
       this.id = 123; 
     }
