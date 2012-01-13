@@ -20,9 +20,13 @@ function decl (declaration) {
 // put the metadata (parent, partial, etc.) in this property.
 decl.dataKey = 'decl-data';
 
-// This object is used as a prototype for declaration objects,
-// so everything here is available as properties of `this`
-// inside the body of each declaration function.
+/** proto
+
+    This object is used as a prototype for declaration objects,
+    so all properties are available as properties of `this`
+    inside the body of each declaration function.
+
+*/
 decl.proto = {
 
   extend: function (ctor) { 
@@ -31,23 +35,48 @@ decl.proto = {
 
   augment: function (ctor) { 
     return (this[decl.dataKey].partial=ctor).prototype; 
-  },
+  }
 
 };
 
-// Create a copy of a simple object
-decl.clone = function (obj) { 
-  return this instanceof decl.clone ? this : 
-         new decl.clone(decl.clone.prototype=obj);
+/** clone
+
+    Create a copy of a simple object.
+    
+    @param {Object} obj
+    
+    @return {Object} clone of obj
+
+*/
+decl.clone = function (object) { 
+  var r = this instanceof decl.clone ? this : 
+          new decl.clone(decl.clone.prototype=object);
+  // reset prototype so we don't get false positives on
+  // `this instanceof decl.clone` condition
+  decl.clone.prototype={};
+  return r;
 };
 
 // Merge src object's properties into target object
+
+/** merge
+
+    Merge src object's properties into target object.
+    
+    @param {Object} target object to merge properties into
+    
+    @param {Object} src object to merge properties from
+    
+    @return {Object} target for chaining
+
+*/
 decl.merge = function (target, src) { 
   for (var k in src) {
     if (src.hasOwnProperty(k) && k!='prototype' && k!=decl.dataKey) {  
       target[k] = src[k];
     }
   }
+  return target;
 };
 
 // Generate empty constructor
