@@ -1,9 +1,7 @@
-
-var decl = (function(){
+var decl = (function(_p, _c){
 
 var Clone = new Function(), // dummy function for prototypal cloning
-    _p = 'prototype', // shortcuts to help get smaller minified size
-    _c = 'constructor', 
+      
     /** dataKey
 
         The name of the property where declaration objects' 
@@ -77,7 +75,7 @@ function decl (declaration) {
     
     @param {String} String value to use for dataKey
 */
-decl.setDataKey = function (value) { dataKey=value; };
+decl['setDataKey'] = function (value) { dataKey=value; };
 
 /** clone
 
@@ -160,8 +158,11 @@ function getCtor (declaration) {
 
 return decl;
 
-}());
+}('prototype', 'constructor'));
 
+// This is outside of the main closure so wrapper functions
+// will have as short a lookup chain as possible.
+    
 /** wrap
 
     Generate wrapper for parent constructor.
