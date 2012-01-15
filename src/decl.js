@@ -175,3 +175,7 @@ return decl;
 decl.wrap = function (parent) {
   return function(){ parent.apply(this, arguments); };
 };
+
+if (typeof externs != 'undefined') {
+  externs.decl = decl;
+}
