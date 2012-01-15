@@ -177,5 +177,5 @@ decl.wrap = function (parent) {
 };
 
 if (typeof externs != 'undefined') {
-  externs.decl = decl;
+  externs['decl'] = decl;
 }
