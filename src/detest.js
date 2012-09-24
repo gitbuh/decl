@@ -76,7 +76,7 @@ Detest.prototype = {
       e = this.logTest(test);
       if ((i==0) || ((!test.ok) && fail==1)) e.onclick();
     }
-    this.summaryArea.textContent = pass + ' passed, ' + fail +' failed.';
+    this.summaryArea.innerHTML = pass + ' passed, ' + fail +' failed.';
     if (!fail) {
       this.summaryArea.style.background = '#393';
     } else {
@@ -111,12 +111,12 @@ Detest.prototype = {
   log: function (msg, detail) {
     var e = document.createElement('li');
     var pre = document.createElement('pre');
-    pre.textContent = msg;
+    pre.innerHTML = msg;
     e.onclick=function(){
       while (detailArea.firstChild) detailArea.removeChild(detailArea.firstChild);
       var pre = detailArea.appendChild(document.createElement('pre')),
           code = pre.appendChild(document.createElement('code'));
-      code.textContent=detail;
+      code.innerHTML=detail;
       if (typeof hljs != 'undefined') {
         hljs.highlightBlock(pre);
       }
