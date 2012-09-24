@@ -1,3 +1,4 @@
+
 /** Detest 
 
     Simple test harness for decl.
@@ -50,7 +51,7 @@ Detest.Test.prototype = {
     } else {
       ++this.passCount;
     }
-  },
+  }
 
 };
 
@@ -136,8 +137,10 @@ Detest.prototype = {
        msg += '\n' + test.error;
     } 
     return this.log(msg, test.fn);
-  },
+  }
 
 };
 
-
+if (typeof exports != 'undefined') {
+  exports['Detest'] = Detest;
+}

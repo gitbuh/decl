@@ -1,2 +1,2 @@
-var decl;
+var window, global;
 

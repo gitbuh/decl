@@ -1,4 +1,25 @@
-var decl = (function(_p, _c){
+
+// exports['decl'] = decl;
+
+var decl = (function(){
+
+/** decl
+
+    Create a prototype object and return its constructor.
+    
+    @param {Function|Object} declaration
+*/
+function decl (declaration) {
+  if (!declaration) {
+    declaration = {};
+  }
+  else if (declaration.call) {
+    declaration.prototype=proto;
+    declaration.prototype[dataKey]={};
+  }
+  return getCtor(declaration);
+}
+
 
 var Clone = new Function(), // dummy function for prototypal cloning
       
@@ -30,7 +51,7 @@ var Clone = new Function(), // dummy function for prototypal cloning
           @return {Object} prototype of parent ctor.
       */
       extend: function (ctor) { 
-        return (this[dataKey].extend=ctor)[_p]; 
+        return (this[dataKey].extend=ctor).prototype; 
       },
 
       /** augment
@@ -43,28 +64,11 @@ var Clone = new Function(), // dummy function for prototypal cloning
           @return {Object} prototype of partial ctor.
       */
       augment: function (ctor) { 
-        return (this[dataKey].augment=ctor)[_p]; 
+        return (this[dataKey].augment=ctor).prototype; 
       }
 
     };
 
-
-/** decl
-
-    Create a prototype object and return its constructor.
-    
-    @param {Function|Object} declaration
-*/
-function decl (declaration) {
-  if (!declaration) {
-    declaration = {};
-  }
-  else if (declaration.call) {
-    declaration[_p]=proto;
-    declaration[_p][dataKey]={};
-  }
-  return getCtor(declaration);
-}
 
 /** setDataKey
 
@@ -87,9 +91,7 @@ decl['setDataKey'] = function (value) { dataKey=value; };
 
 */
 function clone (object) {
-  var r=new Clone(Clone[_p]=object);
-  Clone[_p]={};
-  return r;
+  return new Clone(Clone.prototype=object);
 };
 
 /** merge
@@ -105,11 +107,24 @@ function clone (object) {
 */
 function merge (target, src) { 
   for (var k in src) {
-    if (src.hasOwnProperty(k) && k!=_p && k!=dataKey) {  
+    if (src.hasOwnProperty(k) && k!='prototype' && k!=dataKey) {  
       target[k] = src[k];
     }
   }
   return target;
+};
+
+/** wrap
+
+    Generate wrapper for parent constructor.
+    
+    @param {Function} parent constructor to wrap.
+    
+    @return {Function} child constructor.
+
+*/
+function wrap (parent) {
+  return function(){ parent.apply(this, arguments); };
 };
 
 /** getCtor
@@ -128,20 +143,21 @@ function getCtor (declaration) {
       data = declObj[dataKey] || {},
       parent = data.extend, partial = data.augment, 
       ctor =  // user-defined ctor 
-              declObj.hasOwnProperty(_c) ? declObj[_c] : 
+              declObj.hasOwnProperty('constructor') ? declObj.constructor : 
               // ctor already defined (partial)  
               partial ? partial : 
               // generated wrapper for parent ctor
-              parent ? decl.wrap(parent) : 
+              parent ? wrap(parent) : 
               // generated empty function
-              new Function(); 
+              new Function('"decl empty ctor";'); 
   
   // If there's a parent constructor, use a clone of its prototype
   // and copy the properties from the current prototype.
+  // Also copy properties from parent constructor to the child (static members).
   if (parent) {
-    oldProto = ctor[_p];
-    ctor[_p] = clone(parent[_p]);
-    merge(ctor[_p], oldProto);
+    oldProto = merge(ctor, parent).prototype;
+    ctor.prototype = clone(parent.prototype);
+    merge(ctor.prototype, oldProto);
   }
   
   // Merge the declaration function's properties into the constructor.
@@ -149,33 +165,13 @@ function getCtor (declaration) {
   // without defining a constructor, or before defining one.
   merge(ctor, declFn);
   
-  // Merge the declaration objects's properties into the prototype.
-  merge(ctor[_p], declObj);
+  // Merge the declaration object's properties into the prototype.
+  merge(ctor.prototype, declObj);
   
   // Have the constructor reference itself in its prototype, and return it.
-  return (ctor[_p][_c]=ctor);
+  return (ctor.prototype.constructor=ctor);
 };
 
-return decl;
+return decl; 
 
-}('prototype', 'constructor'));
-
-// This is outside of the main closure so wrapper functions
-// will have as short a lookup chain as possible.
-    
-/** wrap
-
-    Generate wrapper for parent constructor.
-    
-    @param {Function} parent constructor to wrap.
-    
-    @return {Function} child constructor.
-
-*/
-decl.wrap = function (parent) {
-  return function(){ parent.apply(this, arguments); };
-};
-
-if (typeof externs != 'undefined') {
-  externs['decl'] = decl;
-}
+}());
